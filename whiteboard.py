@@ -110,3 +110,38 @@ def solution(arrNums):
         if item not in retList:
             retList.append(item)
     return retList
+
+
+def solution(nums):
+    # Sort the input array in ascending order
+    nums.sort()
+    n = len(nums)
+    res = []  # resulting triplets list
+    for i in range(n):
+        # Skip duplicate elements to avoid duplicate triplets
+        if i > 0 and nums[i] == nums[i - 1]:
+            print('here i am')
+            continue
+        l, r = i + 1, n - 1  # Initialize left and right pointers
+        # Use a while loop to find triplets
+        while l < r:
+            # Calculate the sum of current elements
+            s = nums[i] + nums[l] + nums[r]
+            if s < 0:
+                # If sum is less than zero, move left pointer to the right
+                l += 1
+            elif s > 0:
+                # If sum is greater than zero, move right pointer to the left
+                r -= 1
+            else:
+                # If sum is zero, a triplet is found
+                res.append([nums[i], nums[l], nums[r]])
+                # Skip duplicate elements for both left and right pointers
+                while l < r and nums[l] == nums[l + 1]:
+                    l += 1
+                while l < r and nums[r] == nums[r - 1]:
+                    r -= 1
+                # Move both pointers inward to explore other possibilities
+                l += 1
+                r -= 1
+    return res
